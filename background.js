@@ -23,20 +23,20 @@ chrome.runtime.onInstalled.addListener(function() {
         chrome.tabs.executeScript({
           code: 'var revealjsInjected = true;'
         });
-        chrome.tabs.executeScript({
-          file: 'lib/jquery-3.3.1.js'
-        });
-        chrome.tabs.executeScript({
-            file: 'addcss.js'
-        });
-        chrome.tabs.executeScript({
-          file: 'lib/jquery.modal.js'
-        });
-        chrome.tabs.executeScript({
-          file: 'revealjsctrl.js'
-        });
-        chrome.tabs.executeScript({
-          file: 'websocket.js'
+
+        let jsFiles = [
+          'lib/jquery-3.3.1.js',
+          'lib/jquery-ui-1.12.1.js',
+          'addcss.js',
+          'ui.js',
+          'revealjsctrl.js',
+          'revealjsctrl.js',
+          'websocket.js'
+        ];
+
+        // Add all Javascript files to the page
+        jsFiles.forEach(function(file) {
+          chrome.tabs.executeScript({ file: file });
         });
       }
     });
