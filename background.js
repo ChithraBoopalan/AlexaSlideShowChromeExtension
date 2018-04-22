@@ -19,10 +19,22 @@ chrome.runtime.onInstalled.addListener(function() {
 
   chrome.pageAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript({
-      file: 'jquery-3.3.1.js'
-    });
-    chrome.tabs.executeScript({
-      file: 'revealjsctrl.js'
+      // Check if the revealjsInjected variable has been defined
+      code: 'typeof revealjsInjected === "undefined"'
+    }, function(results) {
+      if (results[0]) {
+        // Define the revealjsInjected variable so that it can be used to
+        // ensure that scripts are injected only once
+        chrome.tabs.executeScript({
+          code: 'var revealjsInjected = true;'
+        });
+        chrome.tabs.executeScript({
+          file: 'jquery-3.3.1.js'
+        });
+        chrome.tabs.executeScript({
+          file: 'revealjsctrl.js'
+        });
+      }
     });
   });
 
