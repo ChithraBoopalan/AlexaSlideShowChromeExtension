@@ -125,7 +125,7 @@ function goToPreviousSlide() {
 }
 
 // Marked slides. This is currently a stack
-let markedSlidesStack = [];
+var markedSlidesStack = [];
 
 // Add the current slide to the marked slides stack
 function markCurrentSlide() {
@@ -150,5 +150,89 @@ function goToLastMarkedSlide() {
   } else {
     goToSlide(s.mainSlide);
   }
+
+  return true;
+}
+
+function sanitizeText(text) {
+  // Change all non alphanumeric characters to spaces
+  text = text.replace(/[^a-zA-Z0-9]/g, ' ');
+  // Remove single characters
+  text = text.replace(/\b\S\b/g, '');
+  // Compress spaces to a single space
+  text = text.replace(/ +/g, ' ');
+  return text
+}
+
+// Very basic search scoring - returns the number of times the query is present
+// in the text
+function getSearchScore(text, query) {
+  let haystack = sanitizeText(text);
+  let needle = sanitizeText(query);
+
+  let matches = haystack.match(new RegExp(needle, 'gi'));
+
+  if (matches == null) {
+    return 0;
+  }
+  return matches.length;
+}
+
+function searchSlides(query) {
+  let ms = getMainSlides();  
+  let results = [];
+
+  for (var h = 0; h < ms.length; h++) {
+    let s = $(ms[h]);
+
+    if (s.filter('.stack').length > 0) {
+      let ss = s.find('> section');
+      for (var v = 0; v < ss.length ; v++) {
+        let score = getSearchScore($(ss[v]).text(), query);
+        if (score > 0) {
+          results.push({
+            mainSlide: h,
+            subSlide: v,
+            score: score
+          });
+        }
+      }
+    } else {
+      let score = getSearchScore(s.text(), query);
+      if (score > 0) {
+        results.push({
+          mainSlide: h,
+          score: score
+        });
+      }
+    }
+  }
+
+  results.sort(function(a, b) {
+    // Higher score values should appear earlier
+    if (a.score > b.score) {
+      return -1;
+    } else if (a.score < b.score) {
+      return 1;
+    }
+
+    // Lower main slide values should appear earlier
+    if (a.mainSlide > b.mainSlide) {
+      return 1;
+    } else if (a.mainSlide < b.mainSlide) {
+      return -1;
+    }
+
+    // Lower sub slide values should appear earlier
+    if (a.subSlide > b.subSlide) {
+      return 1;
+    } else if (a.subSlide < b.mainSlide) {
+      return -1;
+    }
+
+    return 0;
+  });
+
+  return results;
 }
 
