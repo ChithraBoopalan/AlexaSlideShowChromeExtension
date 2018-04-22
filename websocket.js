@@ -1,4 +1,4 @@
-const websocketServer = "ws://localhost:8080";
+const websocketServer = "ws://ec2-35-153-209-22.compute-1.amazonaws.com:8000";
 
 var socket = new WebSocket(websocketServer);
 
