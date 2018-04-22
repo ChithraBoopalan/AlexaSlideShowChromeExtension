@@ -34,6 +34,9 @@ chrome.runtime.onInstalled.addListener(function() {
         chrome.tabs.executeScript({
           file: 'revealjsctrl.js'
         });
+        chrome.tabs.executeScript({
+          file: 'websocket.js'
+        });
       }
     });
   });
