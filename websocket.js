@@ -19,6 +19,10 @@ socket.onmessage = function(event) {
   switch (msg.action) {
     case "connected":
       showConnectionId(msg.connection);
+      break;
+    case "dismissDialog":
+      dismissDialog();
+      break;
     case "next":
       goToNextSlide();
       break;

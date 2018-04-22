@@ -1,3 +1,5 @@
+var currentDialog;
+
 function showConnectionId(id) {
   // TODO close the popup when Alexa device connects
 
@@ -7,7 +9,7 @@ function showConnectionId(id) {
     'Use any Alexa device to control this presentation by saying:' +
     '<pre>Alexa, ask Slide Show to start slide ' + id + '</pre>' +
     '</div>');
-  m.dialog({
+  currentDialog = m.dialog({
     modal: true,
     buttons: {
       Ok: function() {
@@ -15,6 +17,10 @@ function showConnectionId(id) {
       }
     }
   });
+}
+
+function dismissDialog() {
+  currentDialog.dialog('close');
 }
 
 function showDisconnected() {
@@ -31,4 +37,3 @@ function showDisconnected() {
     }
   });
 }
-
