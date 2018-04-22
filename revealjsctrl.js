@@ -90,6 +90,10 @@ function getCurrentSubSlide() {
 }
 
 function goToSlide(mainSlide, subSlide) {
+  if (subSlide < 0) {
+    subSlide = undefined;
+  }
+
   // Inject a script element so that we can call reveal.js's function to switch
   // to a slide.
   $('body').append('<script type="text/javascript">Reveal.slide('+mainSlide+','+subSlide+')</script>');
@@ -117,6 +121,34 @@ function goToPreviousSlide() {
   if (getCurrentMainSlide() > 0) {
     goToSlide(getCurrentMainSlide() - 1);
     return true;
+  }
+}
+
+// Marked slides. This is currently a stack
+let markedSlidesStack = [];
+
+// Add the current slide to the marked slides stack
+function markCurrentSlide() {
+  markedSlidesStack.push(
+    {
+      mainSlide: getCurrentMainSlide(),
+      subSlide: getCurrentSubSlide()
+    }
+  );
+}
+
+// Go to the slide on top of the marked slides stack
+function goToLastMarkedSlide() {
+  if (markedSlidesStack.length == 0) {
+    return false;
+  }
+
+  let s = markedSlidesStack.pop();
+
+  if (s.subSlide >=0 ) {
+    goToSlide(s.mainSlide, s.subSlide);
+  } else {
+    goToSlide(s.mainSlide);
   }
 }
 
