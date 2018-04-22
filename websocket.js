@@ -12,17 +12,34 @@ socket.onmessage = function(event) {
   var msg = JSON.parse(event.data);
 
   switch (msg.action) {
+    case "connected":
+      showConnectionId(msg.connection);
     case "next":
+      goToNextSlide();
       break;
     case "previous":
+      goToPreviousSlide();
       break;
     case "goto":
+      goToSlide(msg.slideNumber);
       break;
     case "up":
       break;
     case "down":
       break;
+    case "left":
+      break;
+    case "right":
+      break;
     case "status":
+      break;
+    case "search":
+      break;
+    case "mark":
+      markCurrentSlide();
+      break;
+    case "gotoMark":
+      goToLastMarkedSlide();
       break;
     default:
       console.log("Unspported action received on websocket: ", msg.action);
@@ -30,5 +47,6 @@ socket.onmessage = function(event) {
 }
 
 socket.onclose = function(event) {
+  showDisconnected();
   console.log("Error: WebSocket connection has been closed");
 }
