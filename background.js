@@ -27,6 +27,12 @@ chrome.runtime.onInstalled.addListener(function() {
           file: 'jquery-3.3.1.js'
         });
         chrome.tabs.executeScript({
+            file: 'addcss.js'
+        });
+        chrome.tabs.executeScript({
+          file: 'jquery.modal.js'
+        });
+        chrome.tabs.executeScript({
           file: 'revealjsctrl.js'
         });
         chrome.tabs.executeScript({
