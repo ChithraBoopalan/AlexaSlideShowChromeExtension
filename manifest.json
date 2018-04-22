@@ -1,7 +1,7 @@
 {
-  "name": "Getting Started Example",
+  "name": "Alexa Slide Show",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Control your reveal.js slide shows with Alexa",
   "permissions": ["activeTab", "declarativeContent"],
   "background": {
     "scripts": ["background.js"],
