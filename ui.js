@@ -37,3 +37,18 @@ function showDisconnected() {
     }
   });
 }
+
+function showSecureConnectionNotSupported() {
+  let m = $('<div title="Alexa Slide Show">' +
+    "Sorry, this extension doesn't support https websites currently. This will be fixed soon. " +
+    "In the meantime, please use websites with http." +
+    '</div>');
+  m.dialog({
+    modal: true,
+    buttons: {
+      Ok: function() {
+        $(this).dialog("close");
+      }
+    }
+  });
+}
