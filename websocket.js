@@ -1,8 +1,11 @@
-const websocketServer = "ws://ec2-35-153-209-22.compute-1.amazonaws.com:8000";
+var websocketServer = "";
 
 if (document.location.href.match(/^https/)) {
-    alert("Sorry, HTTPS websites are not currently supported on Alexa Slide Show Presenter. Please use HTTP for now. We'll fix this very soon!");
+	websocketServer = "wss://alexaslideshow.hopto.org:8080"
 } else {
+	websocketServer = "ws://alexaslideshow.hopto.org:8000"
+}
+
     var socket = new WebSocket(websocketServer);
 
     socket.onopen = function(event) {
@@ -84,4 +87,3 @@ if (document.location.href.match(/^https/)) {
       showDisconnected();
       console.log("Error: WebSocket connection has been closed");
     }
-}
