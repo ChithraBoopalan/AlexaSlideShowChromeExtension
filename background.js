@@ -17,6 +17,10 @@ chrome.runtime.onInstalled.addListener(function() {
       // Check if the revealjsInjected variable has been defined
       code: 'typeof revealjsInjected === "undefined"'
     }, function(results) {
+      chrome.tabs.executeScript({
+        code: 'console.log("Alexa Slide Show needs injection? ' + results[0] + '")'
+      });
+
       if (results[0]) {
         // Define the revealjsInjected variable so that it can be used to
         // ensure that scripts are injected only once
