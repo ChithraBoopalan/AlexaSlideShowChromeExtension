@@ -1,13 +1,22 @@
 var currentDialog;
 
 function showConnectionId(id) {
-  // TODO close the popup when Alexa device connects
+  // Convert id to words
+  let digitWords = [ "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" ];
+  let idParts = id.toString().split("");
+  let idPhrase = "";
+  for (var i in idParts) {
+    if (idPhrase != "") {
+      idPhrase += " ";
+    }
+    idPhrase = idPhrase + digitWords[idParts[i]];
+  }
 
   let m = $('<div title="Alexa Slide Show">' +
     'This is your slide show code:<br />' +
     '<h1 style="text-align: center">' + id + '</h1><br />' +
     'Use any Alexa device to control this presentation by saying:' +
-    '<pre>Alexa, ask Slide Show to start slide ' + id + '</pre>' +
+    '<pre>Alexa, ask Slide Show to start slide <b>' + idPhrase + '</b></pre>' +
     '</div>');
   currentDialog = m.dialog({
     modal: true,
