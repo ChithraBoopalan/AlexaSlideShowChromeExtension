@@ -29,7 +29,30 @@ function showConnectionId(id) {
 }
 
 function dismissDialog() {
+  let m=$('<div title="Connected to Alexa">' +
+    'Sucessfully connected to Alexa!<br/><br />' +
+    'You can now control your slideshow using phrases like "<b>Next slide</b>", "<b>Previous slide</b>", "<b>Go to slide five</b>" and lots more.<br /><br />' +
+    '(This dialog will close automatically in a few seconds)' +
+  '</div>');
+
   currentDialog.dialog('close');
+
+  notificationDialog = m.dialog({
+    modal: true,
+    buttons: {
+      Ok: function() {
+        $(this).dialog("close");
+        notificationDialog = null;
+      }
+    }
+  });
+
+  setTimeout(function() {
+    if (notificationDialog != null) {
+      notificationDialog.dialog('close');
+      notificationDialog = null;
+    }
+  }, 10000);
 }
 
 function showDisconnected() {
