@@ -1,6 +1,6 @@
 {
   "name": "Alexa Slide Show",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Control your reveal.js slide shows with Alexa using the Alexa Slide Show skill",
   "permissions": ["activeTab", "declarativeContent"],
   "background": {
