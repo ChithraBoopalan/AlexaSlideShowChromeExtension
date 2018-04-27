@@ -6,7 +6,18 @@ if (document.location.href.match(/^https/)) {
 	websocketServer = "ws://alexaslideshow.hopto.org:8000";
 }
 
-var socket = connectToWebSocketServer();
+// This is set by connectToWebSocketServer()
+var socket = null;
+// This is set by connectToWebSocketServer()
+var connectionId;
+
+function getWebSocketConnection() {
+  return socket;
+}
+
+function getConnectionId() {
+  return connectionId;
+}
 
 function connectToWebSocketServer() {
   socket = new WebSocket(websocketServer);

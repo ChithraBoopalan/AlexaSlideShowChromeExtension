@@ -40,7 +40,8 @@ chrome.pageAction.onClicked.addListener(function(tab) {
         'ui.js',
         'revealjsctrl.js',
         'revealjsctrl.js',
-        'websocket.js'
+        'websocket.js',
+        'init.js'
       ];
 
       // Add all Javascript files to the page
