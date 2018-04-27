@@ -28,31 +28,36 @@ function showConnectionId(id) {
   });
 }
 
-function dismissDialog() {
+// Dialog shown when an Alexa device has connected to the extension
+var connectionMadeDialog;
+
+function showConnectionMadeDialog() {
   let m=$('<div title="Connected to Alexa">' +
     'Sucessfully connected to Alexa!<br/><br />' +
     'You can now control your slideshow using phrases like "<b>Next slide</b>", "<b>Previous slide</b>", "<b>Go to slide five</b>" and lots more.<br /><br />' +
     '(This dialog will close automatically in a few seconds)' +
   '</div>');
 
-  currentDialog.dialog('close');
-
-  notificationDialog = m.dialog({
+  connectionMadeDialog = m.dialog({
     modal: true,
     buttons: {
-      Ok: function() {
-        $(this).dialog("close");
-        notificationDialog = null;
-      }
+      Ok: dismissConnectionMadeDialog
     }
   });
+}
 
-  setTimeout(function() {
-    if (notificationDialog != null) {
-      notificationDialog.dialog('close');
-      notificationDialog = null;
-    }
-  }, 10000);
+function dismissConnectionMadeDialog() {
+  if (connectionMadeDialog != null) {
+    connectionMadeDialog.dialog('close');
+    connectionMadeDialog = null;
+  }
+}
+
+function dismissDialog() {
+  currentDialog.dialog('close');
+
+  showConnectionMadeDialog();
+  setTimeout(dismissConnectionMadeDialog , 10000);
 }
 
 function showDisconnected() {
