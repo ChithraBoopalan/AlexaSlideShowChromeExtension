@@ -50,6 +50,11 @@ chrome.pageAction.onClicked.addListener(function(tab) {
           file: file
         });
       });
+
+    } else {
+      chrome.tabs.executeScript({
+        code: 'pageActionClicked()'
+      });
     }
   });
 });
